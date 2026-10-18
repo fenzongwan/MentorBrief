@@ -1,0 +1,36 @@
+name: Python checks
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile Python sources
+        run: python -m py_compile *.py
+
+      - name: Validate JSON examples
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          for folder in ("data", "sample"):
+              for path in Path(folder).glob("*.json"):
+                  json.loads(path.read_text(encoding="utf-8"))
+          print("JSON validation passed")
+          PY
