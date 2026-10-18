@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Local databases and runtime data
+data/*.db
+data/*.db-*
+data/*.sqlite
+data/*.sqlite3
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+data/*.log
+*.log
+
+# Local exports and build artifacts
+dist/
+build/
+outputs/
+*.zip
+.tools/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
