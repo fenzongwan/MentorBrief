@@ -409,30 +409,31 @@ DSH 可以：
 ## 8. 文件地图
 
 ```text
-weflow-assistant-demo-v0.1/
+MentorBrief/
 ├── server.py              # 原 demo + retention + mentor report + todos + reply outline
 ├── wechat_text.py         # 微信文本导出 → 标准 JSON（支持脱敏）
 ├── weflow_cache.py        # WeFlow 缓存 → 标准 JSON
 ├── weflow_sync.py         # 增量同步 + 提醒 + 清理
 ├── dsh_bridge.py          # DSH CLI：status/daily/watch/summarize/import
 ├── maintenance.py         # 清理 CLI
-├── seed_demo.py           # 预置脱敏导师聊天、群聊、朋友圈、简报、待办、回复提纲
+├── seed_demo.py           # 预置数据：优先 data/，缺失时回退 sample/
 ├── DSH.md                 # DSH 使用说明
 ├── ARCHITECTURE.md        # 本文件
+├── README.md
 ├── 介绍.md                 # 项目介绍
-├── 技术详解.md             # 给非科班队友的技术讲解
-├── 点评与答辩.md           # 自评、风险、Q&A
-├── 导师简报-项目介绍.pptx    # 路演 PPT
+├── 使用说明.md              # 操作步骤
+├── CONTRIBUTING.md
+├── SECURITY.md
 ├── start-demo.bat         # 一键启动（ASCII + CRLF）
-├── sample/
+├── sample/                # 仓库内置的虚构示例数据
 │   ├── sample-chats.json
-│   └── sample-moments.json
+│   ├── sample-moments.json
+│   ├── sample-mentor-chat.json
+│   ├── sample-mentor-brief.json
+│   ├── sample-reply-outline.json
+│   └── sample-demo-moments.json
 ├── static/                # UI：沟通简报 / 消息总结 / 行动清单 / 关注动态 / 设置
-└── data/
-    ├── mentor-chat.json
-    ├── mentor-brief.json
-    ├── reply-outline.json
-    ├── demo-moments.json
+└── data/                  # 本地真实数据，已 gitignore，不上传
     ├── weflow-assistant.db
     └── weflow_sync_state.json
 ```

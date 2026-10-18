@@ -38,7 +38,7 @@ python .\start-demo.bat
 5. 点「行动清单」勾选/新增跟进事项。
 6. 点「关注动态」看关注对象动态。
 
-详细操作见 [使用说明.md](使用说明.md)，项目背景见 [介绍.md](介绍.md)，技术方案见 [ARCHITECTURE.md](ARCHITECTURE.md)，原理讲解见 [技术详解.md](技术详解.md)，答辩准备见 [点评与答辩.md](点评与答辩.md)，路演材料见 `导师简报-项目介绍.pptx`。
+详细操作见 [使用说明.md](使用说明.md)，项目背景见 [介绍.md](介绍.md)，技术方案见 [ARCHITECTURE.md](ARCHITECTURE.md)，同步命令见 [DSH.md](DSH.md)。
 
 ## 开发模式
 
@@ -137,3 +137,10 @@ WeFlow 导出文件
 ## 数据与隐私
 
 数据库和 API Key 默认只保存在本机。请只处理你有权访问的数据，不要提交真实聊天记录、数据库、日志或 API Key。详见 [SECURITY.md](SECURITY.md)。
+
+## 作者
+
+- [@fenzongwan](https://github.com/fenzongwan) — 作者与维护者
+- [@123YYX](https://github.com/123YYX) — 共同创作者
+
+参与方式见 [CONTRIBUTING.md](CONTRIBUTING.md)。
