@@ -140,7 +140,7 @@ WeFlow 导出文件
 
 ## 作者
 
-- [@fenzongwan](https://github.com/fenzongwan) — 作者与维护者
+- [@fenzongwan](https://github.com/fenzongwan) — 作者
 - [@123YYX](https://github.com/123YYX) — 共同创作者
 
 参与方式见 [CONTRIBUTING.md](CONTRIBUTING.md)。
