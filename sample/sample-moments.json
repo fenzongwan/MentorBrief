@@ -1,0 +1,8 @@
+[
+  {
+    "moments": [
+      {"authorId": "wxid_teacher", "authorName": "陈老师", "createdAt": "2026-10-17 18:30:00", "content": "今晚社团例会改到 7:30，地点东门活动室，报名截止 18:00。", "images": ["/weDecrypt/moment/teacher/1.jpg"]},
+      {"authorId": "wxid_other", "authorName": "非关注好友", "createdAt": "2026-10-17 19:00:00", "content": "这条不应出现在关注时间线。"}
+    ]
+  }
+]

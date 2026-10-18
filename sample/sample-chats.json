@@ -1,0 +1,12 @@
+[
+  {
+    "chatName": "项目协作群",
+    "messages": [
+      {"msgId": "m1", "senderName": "陈老师", "wxid": "wxid_teacher", "time": "2026-10-17 09:20:00", "type": "text", "content": "大家今晚八点在东门集合，负责物资的同学提前十分钟到。"},
+      {"msgId": "m2", "senderName": "李明", "wxid": "wxid_liming", "time": "2026-10-17 09:22:00", "type": "text", "content": "收到。报名表我会在周五前提交。"},
+      {"msgId": "m3", "senderName": "王芳", "wxid": "wxid_wangfang", "time": "2026-10-17 09:25:00", "type": "link", "content": "报名链接：https://example.com/signup"},
+      {"msgId": "m4", "senderName": "李明", "wxid": "wxid_liming", "time": "2026-10-17 10:02:00", "type": "text", "content": "活动预算决定控制在 300 元以内。"},
+      {"msgId": "m5", "senderName": "陈老师", "wxid": "wxid_teacher", "time": "2026-10-17 10:10:00", "type": "text", "content": "负责人：李明负责报名，王芳负责现场签到。"}
+    ]
+  }
+]
