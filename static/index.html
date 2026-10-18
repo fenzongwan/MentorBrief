@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mentor Brief · 导师简报</title>
+  <link rel="stylesheet" href="/static/app.css?v=20261018-4">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <div class="brand">Mentor Brief · 导师简报</div>
+      <div class="subtitle">已授权沟通整理 · 行动提醒</div>
+    </div>
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-tab="report">沟通简报</button>
+      <button class="tab" data-tab="messages">消息总结</button>
+      <button class="tab" data-tab="todos">行动清单 <span class="badge hidden" id="todoBadge">0</span></button>
+      <button class="tab" data-tab="moments">关注动态 <span class="badge hidden" id="momentBadge">0</span></button>
+      <button class="tab" data-tab="settings">设置</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page" id="page-messages">
+      <aside class="conversation-panel">
+        <div class="panel-head">
+          <h2>会话</h2>
+          <button class="ghost" id="refreshState">刷新</button>
+        </div>
+        <input id="conversationSearch" class="input" placeholder="搜索群聊或成员" autocomplete="off">
+        <select id="rangeSelect" class="input">
+          <option value="7">最近 7 天</option>
+          <option value="30">最近 30 天</option>
+          <option value="all">全部</option>
+        </select>
+        <button class="primary wide" id="loadMessages">读取消息</button>
+        <div class="conversation-list" id="conversationList"></div>
+      </aside>
+
+      <section class="summary-panel">
+        <div class="panel-head">
+          <h2 id="summaryTitle">未选择会话</h2>
+          <div class="actions">
+            <label class="file-label">
+              导入聊天
+              <input type="file" id="importChats" accept=".json,.csv,.tsv" hidden>
+            </label>
+            <button class="primary" id="summarize">一键总结</button>
+            <button class="ghost" id="toggleRaw">原文对照</button>
+          </div>
+        </div>
+        <div id="summaryMeta" class="meta-line">选择左侧会话后读取消息。</div>
+        <div id="summaryContent" class="summary-content empty">
+          <p>摘要会显示要点、待办、约定和链接，并支持关联到原文。</p>
+        </div>
+        <div id="rawPanel" class="raw-panel hidden">
+          <div class="panel-head">
+            <h3>原始消息</h3>
+            <div class="actions">
+              <button class="ghost" id="loadEarlierMessages">加载更早</button>
+              <button class="ghost" id="toggleRealNames">显示原名</button>
+            </div>
+          </div>
+          <div id="messageList" class="message-list"></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="page active" id="page-report">
+      <section class="report-panel">
+        <div class="panel-head">
+          <div>
+            <h2 id="reportTitle">沟通简报</h2>
+            <div id="reportMeta" class="meta-line">只整理你已收到的沟通，不上传原始聊天。</div>
+          </div>
+          <div class="actions">
+            <button class="ghost" id="refreshReport">刷新简报</button>
+          </div>
+        </div>
+        <div class="report-controls">
+          <label>
+            <span>整理会话</span>
+            <select id="reportConversationSelect" class="input"></select>
+          </label>
+          <label>
+            <span>时间范围</span>
+            <select id="reportRangeSelect" class="input">
+              <option value="7">最近 7 天</option>
+              <option value="30">最近 30 天</option>
+              <option value="all" selected>全部</option>
+            </select>
+          </label>
+          <button class="primary report-generate" id="generateReport">生成沟通简报</button>
+          <div class="report-control-note">从选定会话中提取关键信号、技术结论、行动项和回复建议。</div>
+        </div>
+        <div id="reportMetrics" class="metric-grid"></div>
+        <div id="mentorReport" class="report-content empty">
+          <p>选择会话后点击“生成沟通简报”。</p>
+        </div>
+      </section>
+    </section>
+
+    <section class="page" id="page-todos">
+      <aside class="watch-panel">
+        <div class="panel-head">
+          <h2>行动清单</h2>
+          <button class="ghost" id="refreshTodos">刷新</button>
+        </div>
+        <div class="filter-row" id="todoFilters">
+          <button class="chip active" data-status="open">待办</button>
+          <button class="chip" data-status="done">已完成</button>
+          <button class="chip" data-status="all">全部</button>
+        </div>
+        <form id="todoForm" class="stack">
+          <input id="todoTitle" class="input" placeholder="新增跟进事项" autocomplete="off">
+          <input id="todoDue" class="input" placeholder="时间 / 截止（可选）" autocomplete="off">
+          <select id="todoPriority" class="input">
+            <option value="high">高优先级</option>
+            <option value="medium" selected>中优先级</option>
+            <option value="low">低优先级</option>
+          </select>
+          <button class="primary wide" type="submit">添加跟进</button>
+        </form>
+        <div class="privacy-note">待办只保存在本机，不会自动发回微信。</div>
+      </aside>
+      <section class="moment-panel">
+        <div class="panel-head">
+          <h2>跟进事项</h2>
+          <div class="meta-line" id="todoSummary">0 项待办</div>
+        </div>
+        <div id="todoList" class="todo-list"></div>
+      </section>
+    </section>
+
+    <section class="page" id="page-moments">
+      <aside class="watch-panel">
+        <div class="panel-head"><h2>关注名单</h2></div>
+        <form id="watchForm" class="stack">
+          <input id="watchName" class="input" placeholder="显示名" autocomplete="off">
+          <input id="watchId" class="input" placeholder="wxid / 稳定 ID" autocomplete="off">
+          <button class="primary wide" type="submit">添加关注</button>
+        </form>
+        <div id="watchList" class="watch-list"></div>
+      </aside>
+      <section class="moment-panel">
+        <div class="panel-head">
+          <h2>动态时间线</h2>
+          <div class="actions">
+            <label class="file-label">
+              导入朋友圈
+              <input type="file" id="importMoments" accept=".json,.csv,.tsv" hidden>
+            </label>
+            <button class="ghost" id="markMomentsRead">标记已读</button>
+          </div>
+        </div>
+        <div id="momentAlert" class="alert hidden"></div>
+        <div id="momentList" class="moment-list"></div>
+      </section>
+    </section>
+
+    <section class="page" id="page-settings">
+      <aside class="settings-panel">
+        <div class="panel-head"><h2>设置</h2></div>
+        <form id="settingsForm" class="stack">
+          <label>模型服务
+            <select id="provider" class="input">
+              <option value="mock">本地规则总结（无需 API）</option>
+              <option value="openai_compatible">OpenAI 兼容接口</option>
+            </select>
+          </label>
+          <label>API Base URL<input id="apiBaseUrl" class="input" autocomplete="off"></label>
+          <label>模型<input id="model" class="input" autocomplete="off"></label>
+          <label>API Key<input id="apiKey" class="input" type="password" autocomplete="off" placeholder="留空则保持现状"></label>
+          <label>请求超时（秒）<input id="requestTimeoutSeconds" class="input" type="number" min="5" max="180"></label>
+          <label>单次请求最大消息数<input id="maxMessagesPerRequest" class="input" type="number" min="10" max="5000"></label>
+          <label class="check"><input id="maskNames" type="checkbox"> 默认发送前脱敏</label>
+          <label class="check"><input id="fallbackToLocal" type="checkbox"> API 失败时使用本地规则兜底</label>
+          <button class="primary wide" type="submit">保存设置</button>
+        </form>
+        <div class="privacy-note">API key 只保存在本机 SQLite，不会出现在页面常驻状态里。</div>
+      </aside>
+      <section class="audit-panel">
+        <div class="panel-head"><h2>审计日志</h2></div>
+        <div class="audit-table" id="auditTable"></div>
+      </section>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="/static/app.js?v=20261018-4"></script>
+</body>
+</html>
