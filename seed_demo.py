@@ -18,6 +18,18 @@ import server
 
 ROOT = Path(__file__).resolve().parent
 DATA = ROOT / "data"
+SAMPLE = ROOT / "sample"
+
+
+def resolve_file(real_name: str, sample_name: str):
+    """优先使用本地真实数据（data/，不入库），缺失时回退仓库内置示例（sample/）。"""
+    real = DATA / real_name
+    if real.is_file():
+        return real
+    sample = SAMPLE / sample_name
+    if sample.is_file():
+        return sample
+    return None
 
 
 def remove_database():
@@ -50,30 +62,42 @@ def main(argv=None):
         remove_database()
         print("已清空旧数据库")
 
-    import_json(DATA / "mentor-chat.json", server.import_messages, "导师私聊")
-    import_json(ROOT / "sample" / "sample-chats.json", server.import_messages, "示例群聊")
+    mentor_chat = resolve_file("mentor-chat.json", "sample-mentor-chat.json")
+    if not mentor_chat:
+        raise FileNotFoundError(
+            "缺少导师会话数据：请放置 data/mentor-chat.json，或使用内置的 sample/sample-mentor-chat.json"
+        )
+    mentor_meta = json.loads(mentor_chat.read_text(encoding="utf-8"))[0]
+    mentor_chat_id = mentor_meta.get("chatId") or "mentor_demo"
+    mentor_chat_name = mentor_meta.get("chatName") or "导师"
+    mentor_name = mentor_chat_name.split("·")[-1].strip()
+
+    import_json(mentor_chat, server.import_messages, "导师私聊")
+    import_json(SAMPLE / "sample-chats.json", server.import_messages, "示例群聊")
 
     with server.open_db() as conn:
-        server.ensure_watch(conn, "mentor_demo", "周老师")
-        mentor_id = conversation_id(conn, "导师 · 周老师")
+        server.ensure_watch(conn, mentor_chat_id, mentor_name)
+        mentor_id = conversation_id(conn, mentor_chat_name)
         group_id = conversation_id(conn, "项目协作群")
         if not mentor_id:
             raise RuntimeError("导师会话导入失败")
 
         # Curated mentor report
-        brief = json.loads((DATA / "mentor-brief.json").read_text(encoding="utf-8"))
-        conn.execute("DELETE FROM mentor_reports WHERE conversation_id=?", (mentor_id,))
-        conn.execute(
-            "INSERT INTO mentor_reports(id, conversation_id, period_start, period_end, result, created_at) VALUES(?,?,?,?,?,?)",
-            (
-                str(uuid.uuid4()),
-                mentor_id,
-                "2026-08-10",
-                "2026-09-07",
-                json.dumps(brief, ensure_ascii=False),
-                server.utc_now(),
-            ),
-        )
+        brief_path = resolve_file("mentor-brief.json", "sample-mentor-brief.json")
+        brief = json.loads(brief_path.read_text(encoding="utf-8")) if brief_path else {}
+        if brief:
+            conn.execute("DELETE FROM mentor_reports WHERE conversation_id=?", (mentor_id,))
+            conn.execute(
+                "INSERT INTO mentor_reports(id, conversation_id, period_start, period_end, result, created_at) VALUES(?,?,?,?,?,?)",
+                (
+                    str(uuid.uuid4()),
+                    mentor_id,
+                    str(brief.get("periodStart", ""))[:10] or None,
+                    str(brief.get("date", ""))[:10] or None,
+                    json.dumps(brief, ensure_ascii=False),
+                    server.utc_now(),
+                ),
+            )
 
         # A curated summary so the "消息总结" page has something to show immediately.
         mentor_count = conn.execute(
@@ -116,18 +140,20 @@ def main(argv=None):
         )
 
         # Curated reply outline
-        reply_outline = json.loads((DATA / "reply-outline.json").read_text(encoding="utf-8"))
-        conn.execute("DELETE FROM reply_outlines WHERE conversation_id=?", (mentor_id,))
-        conn.execute(
-            "INSERT INTO reply_outlines(id, conversation_id, title, result, created_at) VALUES(?,?,?,?,?)",
-            (
-                str(uuid.uuid4()),
-                mentor_id,
-                "回复提纲 · 导师沟通",
-                json.dumps(reply_outline, ensure_ascii=False),
-                server.utc_now(),
-            ),
-        )
+        outline_path = resolve_file("reply-outline.json", "sample-reply-outline.json")
+        reply_outline = json.loads(outline_path.read_text(encoding="utf-8")) if outline_path else None
+        if reply_outline:
+            conn.execute("DELETE FROM reply_outlines WHERE conversation_id=?", (mentor_id,))
+            conn.execute(
+                "INSERT INTO reply_outlines(id, conversation_id, title, result, created_at) VALUES(?,?,?,?,?)",
+                (
+                    str(uuid.uuid4()),
+                    mentor_id,
+                    "回复提纲 · 导师沟通",
+                    json.dumps(reply_outline, ensure_ascii=False),
+                    server.utc_now(),
+                ),
+            )
 
         # Action list from the curated brief
         conn.execute(
@@ -177,7 +203,9 @@ def main(argv=None):
                 ),
             )
 
-    import_json(DATA / "demo-moments.json", server.import_moments, "示例朋友圈")
+    moments_path = resolve_file("demo-moments.json", "sample-demo-moments.json")
+    if moments_path:
+        import_json(moments_path, server.import_moments, "示例朋友圈")
 
     with server.open_db() as conn:
         conversations = conn.execute("SELECT id, title FROM conversations ORDER BY title").fetchall()

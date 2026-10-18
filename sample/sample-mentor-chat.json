@@ -1,0 +1,105 @@
+[
+  {
+    "chatId": "mentor_demo",
+    "chatName": "导师 · 周老师",
+    "chatType": "direct",
+    "messages": [
+      {
+        "msgId": "demo_001",
+        "senderName": "周老师",
+        "wxid": "mentor_demo",
+        "time": "2026-09-01T09:12:00+08:00",
+        "type": "text",
+        "content": "同学你好，我是周老师，这学期的科研训练项目由我这边带。"
+      },
+      {
+        "msgId": "demo_002",
+        "senderName": "我",
+        "wxid": "self",
+        "time": "2026-09-01T09:15:00+08:00",
+        "type": "text",
+        "content": "周老师好，我是同学，接下来这段时间麻烦您指导。"
+      },
+      {
+        "msgId": "demo_003",
+        "senderName": "周老师",
+        "wxid": "mentor_demo",
+        "time": "2026-09-01T09:18:00+08:00",
+        "type": "text",
+        "content": "先说选题。组里目前有两个方向可以进：一个是结构表征，一个是工艺参数优化。你之前有基础吗？"
+      },
+      {
+        "msgId": "demo_004",
+        "senderName": "我",
+        "wxid": "self",
+        "time": "2026-09-01T09:24:00+08:00",
+        "type": "text",
+        "content": "数据处理这块我比较熟，实验操作经验还不多，想先跟着师兄做一段时间。"
+      },
+      {
+        "msgId": "demo_005",
+        "senderName": "周老师",
+        "wxid": "mentor_demo",
+        "time": "2026-09-01T09:31:00+08:00",
+        "type": "text",
+        "content": "那就先定工艺参数优化，上手快，也方便你熟悉设备。下周组会你做个文献汇报，十页左右。"
+      },
+      {
+        "msgId": "demo_006",
+        "senderName": "我",
+        "wxid": "self",
+        "time": "2026-09-03T14:02:00+08:00",
+        "type": "text",
+        "content": "周老师，文献我筛了二十来篇，主要集中在近三年的。有两个参数体系差别比较大，我不确定该以哪个为准。"
+      },
+      {
+        "msgId": "demo_007",
+        "senderName": "周老师",
+        "wxid": "mentor_demo",
+        "time": "2026-09-03T14:20:00+08:00",
+        "type": "text",
+        "content": "两套都能用，但第一套对设备要求低，我们实验室能保证。你先按第一套搭流程，跑通再考虑扩展。"
+      },
+      {
+        "msgId": "demo_008",
+        "senderName": "我",
+        "wxid": "self",
+        "time": "2026-09-08T10:05:00+08:00",
+        "type": "text",
+        "content": "收到。另外想问下，测试样品是统一制备还是每个人自己处理？我看到之前有同学是分批做的。"
+      },
+      {
+        "msgId": "demo_009",
+        "senderName": "周老师",
+        "wxid": "mentor_demo",
+        "time": "2026-09-08T10:33:00+08:00",
+        "type": "text",
+        "content": "统一制备，保证一致性。你把自己的参数表提前发给师兄，他那边排批次的时候一起安排。"
+      },
+      {
+        "msgId": "demo_010",
+        "senderName": "我",
+        "wxid": "self",
+        "time": "2026-09-08T10:35:00+08:00",
+        "type": "text",
+        "content": "好的，我今天整理完发过去。"
+      },
+      {
+        "msgId": "demo_011",
+        "senderName": "周老师",
+        "wxid": "mentor_demo",
+        "time": "2026-09-15T16:40:00+08:00",
+        "type": "text",
+        "content": "第一批数据我看过了，趋势是对的，但有两个点偏离比较多，你复查一下是不是记录的时候单位写错了。"
+      },
+      {
+        "msgId": "demo_012",
+        "senderName": "我",
+        "wxid": "self",
+        "time": "2026-09-15T17:02:00+08:00",
+        "type": "text",
+        "content": "我核对一下原始记录，明天组会把修正后的结果一起汇报。"
+      }
+    ]
+  }
+]

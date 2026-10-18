@@ -1,0 +1,23 @@
+[
+  {
+    "authorId": "mentor_demo",
+    "authorName": "周老师",
+    "createdAt": "2026-09-15 18:20:00",
+    "content": "科研训练中期检查安排出来了，下周组会按顺序汇报，每人十分钟。",
+    "images": []
+  },
+  {
+    "authorId": "lab_senior",
+    "authorName": "师兄",
+    "createdAt": "2026-09-14 20:05:00",
+    "content": "下一批样品开始排了，参数表还没交的同学尽快。",
+    "images": []
+  },
+  {
+    "authorId": "lab_senior",
+    "authorName": "师兄",
+    "createdAt": "2026-09-10 12:30:00",
+    "content": "实验室新到的耗材放在三号柜，登记后自取。",
+    "images": []
+  }
+]

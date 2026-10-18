@@ -16,6 +16,10 @@ env/
 .env.*
 !.env.example
 
+# Private conversation data: real exports stay on this machine, never committed.
+# The repo ships sanitized samples in sample/ and the app falls back to them.
+data/
+
 # Local databases and runtime data
 data/*.db
 data/*.db-*
