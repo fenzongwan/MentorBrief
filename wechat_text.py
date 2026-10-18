@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Parse WeChat text exports like:
 
-    2026-08-10 09:53:06 '某企业 周老师'
+    2026-09-01 09:12:00 '示例科技 周老师'
     你好，我是……
 
-    2026-08-10 09:54:00 '我'
-    老师，好……
+    2026-09-01 09:15:00 '我'
+    老师好……
 
 The parser is deliberately local-only. It does not connect to WeChat.
 """
@@ -27,21 +27,16 @@ IMAGE_RE = re.compile(r"\.(?:jpe?g|png|gif|webp|bmp)$", re.IGNORECASE)
 
 PHONE_RE = re.compile(r"\b1[3-9]\d{9}\b")
 ADDRESS_RE = re.compile(r"(?:江苏省)?南京市[^\n]*(?:大学|学院)[^\n]*")
-KNOWN_NAMES = ["同学", "某人", "某高校", "某高校"]
+# 中性示例：按自己的情况替换这些词。不要把真实姓名、单位、学校写进仓库。
+KNOWN_NAMES = ["示例同学", "示例企业", "示例大学"]
 
 
 def redact_text(text: str) -> str:
     text = PHONE_RE.sub("[手机号]", text)
     text = ADDRESS_RE.sub("[地址]", text)
-    text = text.replace("同学", "同学")
-    text = text.replace("同学", "同学")
-    text = text.replace("某人", "周老师")
-    text = text.replace("某高校", "高校")
-    text = text.replace("某高校", "高校")
-    text = text.replace("我们", "我们")
-    text = text.replace("某企业", "某3D打印企业")
-    text = text.replace("该企业", "该企业")
-    text = text.replace("高校这样的高校", "高校")
+    text = text.replace("示例同学", "同学")
+    text = text.replace("示例企业", "某企业")
+    text = text.replace("示例大学", "高校")
     return text
 
 
@@ -106,8 +101,8 @@ def to_app_export(messages, chat_id="mentor_demo", chat_name="导师 · 周老�
         output.append(
             {
                 "msgId": f"txt_{msg_id}",
-                "senderName": "我" if is_self else "周老师",
-                "wxid": "self" if is_self else "mentor_demo",
+                "senderName": "我" if is_self else sender,
+                "wxid": "self" if is_self else chat_id,
                 "time": stamp.isoformat(timespec="seconds"),
                 "type": kind,
                 "content": content,
